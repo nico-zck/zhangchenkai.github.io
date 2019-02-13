@@ -326,6 +326,173 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangchenkai.github.io/2019/02/13/hexo-mathjax/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nico Zhang">
+      <meta itemprop="description" content="透明，坚硬。">
+      <meta itemprop="image" content="/images/nz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nico">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/02/13/hexo-mathjax/" class="post-title-link" itemprop="url">利用 mathjax 使 hexo 支持 LaTex 公式</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-13 22:29:09 / Modified: 23:13:28" itemprop="dateCreated datePublished" datetime="2019-02-13T22:29:09+08:00">2019-02-13</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="1-使用-kramed-代替-marked"><a href="#1-使用-kramed-代替-marked" class="headerlink" title="1. 使用 kramed 代替 marked"></a>1. 使用 kramed 代替 marked</h1><p>hexo默认的渲染引擎是marked，但是marked不支持mathjax。 kramed是在 marked的基础上进行修改。我们在工程目录下执行以下命令来安装kramed.</p>
+<p>先删除marked</p>
+<blockquote>
+<p>npm uninstall hexo-renderer-marked —save</p>
+</blockquote>
+<p>然后安装kramed</p>
+<blockquote>
+<p>npm install hexo-renderer-kramed —save</p>
+</blockquote>
+<h1 id="2-不要使用-hexo-math"><a href="#2-不要使用-hexo-math" class="headerlink" title="2. 不要使用 hexo-math"></a>2. 不要使用 hexo-math</h1><p>新版本的hexo在安装hexo-math的时候会出现警告信息，大致意思是说这个插件已经被弃用，所以不推荐使用hexo-math。<br>如果你已经安装 hexo-math, 请先卸载它：</p>
+<blockquote>
+<p>npm uninstall hexo-math —save</p>
+</blockquote>
+<p>然后安装 hexo-renderer-mathjax：</p>
+<blockquote>
+<p>npm install hexo-renderer-mathjax —save</p>
+</blockquote>
+<h1 id="3-更改-kramed-中冲突的转义规则"><a href="#3-更改-kramed-中冲突的转义规则" class="headerlink" title="3. 更改 kramed 中冲突的转义规则"></a>3. 更改 kramed 中冲突的转义规则</h1><p>由于kramed转义规则与LaTex语法有一些冲突，我们需要修改kramed的规则来使mathjax能够准确编译LaTex的公式。</p>
+<p>首先打开文件<code>.\node_modules\kramed\lib\rules\inline.js</code>, 然后替换其中的<code>escape</code> 和 <code>em</code> 规则：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">escape</span>: <span class="regexp">/^\\([`*\[\]()#$+\-.!_&gt;])/</span>,</span><br><span class="line">em: <span class="regexp">/^\*((?:\*\*|[\s\S])+?)\*(?!\*)/</span>,</span><br></pre></td></tr></table></figure>
+<h1 id="4-开启-mathjax"><a href="#4-开启-mathjax" class="headerlink" title="4. 开启 mathjax"></a>4. 开启 mathjax</h1><p>在主题的配置文件_config.yml中开启mathjax， 找到mathjax字段添加如下代码：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mathjax:</span></span><br><span class="line"><span class="attr">    enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>到这里，我们的hexo就可以完全支持LaTex公式了。但是，如果你想在你的文章中插入数学公式的话，还需要在文章的头部，hexo称之为front-matter的部分上添加一个字段，就像下面的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">----</span><br><span class="line">title: Hello Mathjax</span><br><span class="line">date: 2019-01-01</span><br><span class="line"></span><br><span class="line">categories: Uncategorized</span><br><span class="line">tags:</span><br><span class="line">  - LaTex</span><br><span class="line">  - mathjax</span><br><span class="line"></span><br><span class="line">mathjax: true</span><br><span class="line">----</span><br></pre></td></tr></table></figure>
+<p>通过以上步骤，我们就可以在 hexo 中使用 mathjax 来书写 LaTex 数学公式。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangchenkai.github.io/2018/10/25/gabor-filter/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -769,7 +936,7 @@ Gabor(x_0, y_0, \theta, \sigma_x, \sigma_y, u_0, v_0) & = s(x,y) \cdot \omega_r(
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -801,7 +968,11 @@ Gabor(x_0, y_0, \theta, \sigma_x, \sigma_y, u_0, v_0) & = s(x,y) \cdot \omega_r(
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -1016,6 +1187,8 @@ Gabor(x_0, y_0, \theta, \sigma_x, \sigma_y, u_0, v_0) & = s(x,y) \cdot \omega_r(
 
   
   
+    
+      
     
       
         
