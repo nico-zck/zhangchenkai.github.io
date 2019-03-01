@@ -326,6 +326,326 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangchenkai.github.io/2019/03/01/numerical-safety-for-sigmoid-and-softmax/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nico Zhang">
+      <meta itemprop="description" content="透明，坚硬。">
+      <meta itemprop="image" content="/images/nz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nico">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/01/numerical-safety-for-sigmoid-and-softmax/" class="post-title-link" itemprop="url">Numerical safety for sigmoid and softmax</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-03-01 23:52:14 / Modified: 23:53:38" itemprop="dateCreated datePublished" datetime="2019-03-01T23:52:14+08:00">2019-03-01</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>to</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangchenkai.github.io/2019/03/01/sigmoid-softmax-relation/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nico Zhang">
+      <meta itemprop="description" content="透明，坚硬。">
+      <meta itemprop="image" content="/images/nz.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nico">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/01/sigmoid-softmax-relation/" class="post-title-link" itemprop="url">The relation between sigmoid and softmax</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-03-01 21:49:29 / Modified: 23:54:12" itemprop="dateCreated datePublished" datetime="2019-03-01T21:49:29+08:00">2019-03-01</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">ML</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Logistic-regression"><a href="#Logistic-regression" class="headerlink" title="Logistic regression"></a>Logistic regression</h1><p>Logistic regression is a basic machine learning model for binary classification, so do not misunderstand that linear model could be apply to multi-class classification.</p>
+<p>Assume that you know the famous sigmoid function:</p>
+<script type="math/tex; mode=display">Sigmoid(x) = \sigma(x)=sigmoid(w \cdot x)</script><p>the bias term of $b$ will be ignore for convenience. Yes, the sigmoid function is look like this,<br><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Logistic-curve.svg/320px-Logistic-curve.svg.png" alt="sigmoid figure"><br>it squash whole real number field to the range $(0, 1)$, as a probability for a certain class.</p>
+<p>Let’s look back to $w \cdot x$, w is a vector or matrix, it’s not important, the important is the out put of the dot product will be a scalar for sigmoid function.</p>
+<p>From another view, we could regard the aforementioned $w$ as $\Delta w = w_1 - w_0$.<br>Then we can get $\Delta w \cdot x = w_1 \cdot x - w_0 \cdot x$, where $w_1$ is the weights vector for class=1 and same meaning for $w_0$.<br>And $w_1 \cdot x$, $w_0 \cdot x$ could be seen as the value of confidence that the input is class1 and class2.</p>
+<p>If $w_1 \cdot x &gt; w_0 \cdot x$, we will get $w \cdot x &gt; 0$ and the corresponding output of sigmoid function will greater than 0.5, which means that the input $x$ is more likely to be calss1, and vice versa.</p>
+<h1 id="Sigmoid"><a href="#Sigmoid" class="headerlink" title="Sigmoid"></a>Sigmoid</h1><p>Now, we can put the $\Delta x$ back to the function:</p>
+<script type="math/tex; mode=display">\sigma(w \cdot x)=\frac{e^{\Delta w\cdot x}}{1+e^{\Delta w\cdot x}} = \frac{e^{(w_1-w_0)\cdot x}}{e^{(w_0-w_0)\cdot x}+e^{(w_1-w_0)\cdot x}}</script><p>divide both the top and the bottom by $e^{-w_0\cdot x}$:</p>
+<script type="math/tex; mode=display">\sigma(w \cdot x)=\frac{e^{w_1 \cdot x}}{e^{w_0 \cdot x}+e^{w_1 \cdot x}}</script><p>that means the probability of class1 could get from the ratio of confidence values that class1 to class1 plus class2 (all these two classes).</p>
+<p>The sigmoid function can only show the ratio (probability) of class1 of the two.<br>But if we expand it for more than 2 classes, can we compute the ratio of a certain class to all calssed by this formula.</p>
+<h1 id="Softmax"><a href="#Softmax" class="headerlink" title="Softmax"></a>Softmax</h1><p>Assume we have $K$ classes, their weights are $w_1, w_2, …, w_k$, we use $e^{w_i \cdot x}$ represent the confident value of class i, imitate the form of above formula, we can get the ratio:</p>
+<script type="math/tex; mode=display">\frac{e^{w_j\cdot x}}{e^{w_1\cdot x}+e^{w_2\cdot x}+e^{w_3\cdot x}+…+e^{w_k\cdot x}}</script><p>Add sum formula $\Sigma$ to the denominator, then we will get the well-known <strong>Softmax</strong> function !</p>
+<script type="math/tex; mode=display">
+Softmax(\mathbf{x}) _ i=\frac{e^{\mathbf{x}^{\top} \mathbf{w}_{i}}}{\sum_{k=1}^{K} e^{\mathbf{x}^{\top} \mathbf{w}_{k}}}</script><h1 id="Binary-classification"><a href="#Binary-classification" class="headerlink" title="Binary classification"></a>Binary classification</h1><p>We all know that sigmoid is for binary classification while softmax is for multi-class classification.<br>But what is the difference between sigmoid and softmax when they both are applied to binary classification?</p>
+<ol>
+<li>First, sigmoid output only one value, while softmax will output a vector of two value for two classes.</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangchenkai.github.io/2019/02/13/hexo-mathjax/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -936,7 +1256,7 @@ Gabor(x_0, y_0, \theta, \sigma_x, \sigma_y, u_0, v_0) & = s(x,y) \cdot \omega_r(
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -951,7 +1271,9 @@ Gabor(x_0, y_0, \theta, \sigma_x, \sigma_y, u_0, v_0) & = s(x,y) \cdot \omega_r(
                     
                       
                     
-                    <span class="site-state-item-count">1</span>
+                      
+                    
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -972,7 +1294,11 @@ Gabor(x_0, y_0, \theta, \sigma_x, \sigma_y, u_0, v_0) & = s(x,y) \cdot \omega_r(
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -1189,9 +1515,13 @@ Gabor(x_0, y_0, \theta, \sigma_x, \sigma_y, u_0, v_0) & = s(x,y) \cdot \omega_r(
   
     
       
+        
+      
     
       
-        
+    
+      
+    
       
     
       
